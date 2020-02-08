@@ -1,0 +1,133 @@
+Pandas Exercises
+
+Prerequisite:
+Make sure you have the 'Autmobile_data.csv' dataset in the same folder as this file.
+Have a thorough understanding of pandas, specifically, dataframes.
+
+#----------------------------------------#
+Question 1
+
+Question:
+From the given dataset, print first and last five rows.
+
+Solution:
+import pandas as pd
+df = pd.read_csv("Automobile_data.csv")
+df.head(5)
+df.tail(5)
+#----------------------------------------#
+
+#----------------------------------------#
+Question 2
+
+Question:
+Clean data and update the CSV file (Replace all column values
+which contain ‘?’ and n.a with NaN.)
+
+Solution:
+df = pd.read_csv("Automobile_data.csv", na_values={
+'price':["?","n.a"],
+'stroke':["?","n.a"],
+'horsepower':["?","n.a"],
+'peak-rpm':["?","n.a"],
+'average-mileage':["?","n.a"]})
+print(df)
+df.to_csv("Automobile_data.csv")
+#----------------------------------------#
+
+#----------------------------------------#
+Question 3
+
+Question:
+Find the most expensive car company name
+
+Solution:
+import pandas as pd
+df = pd.read_csv("Automobile_data.csv")
+df = df [['company','price']][df.price==df['price'].max()]
+print(df)
+#----------------------------------------#
+
+#----------------------------------------#
+Question 4
+
+Question:
+Print details of all Toyota cars
+
+Solution:
+import pandas as pd
+df = pd.read_csv("Automobile_data.csv")
+car_Manufacturers = df.groupby('company')
+toyotaDf = car_Manufacturers.get_group('toyota')
+print(toyotaDf)
+#----------------------------------------#
+
+#----------------------------------------#
+Question 5
+
+Question:
+Count the number of total cars per company
+
+Solution:
+import pandas as pd
+df = pd.read_csv("Automobile_data.csv")
+df['company'].value_counts()
+#----------------------------------------#
+
+#----------------------------------------#
+Question 6
+
+Question:
+Find each company’s highest priced car
+
+Solution:
+import pandas as pd
+df = pd.read_csv("Automobile_data.csv")
+car_Manufacturers = df.groupby('company')
+priceDf = car_Manufacturers['company','price'].max()
+print(priceDf)
+#----------------------------------------#
+
+#----------------------------------------#
+Question 7
+
+Question:
+Find the average mileage of each company
+
+Solution:
+import pandas as pd
+df = pd.read_csv("Automobile_data.csv")
+car_Manufacturers = df.groupby('company')
+mileageDf = car_Manufacturers['company','average-mileage'].mean()
+print(mileageDf)
+#----------------------------------------#
+
+#----------------------------------------#
+Question 8
+
+Question:
+Sort the data by the price column
+
+Solution:
+import pandas as pd
+carsDf = pd.read_csv("Automobile_data.csv")
+carsDf = carsDf.sort_values(by=['price', 'horsepower'], ascending=False)
+carsDf.head(5)
+#----------------------------------------#
+
+#----------------------------------------#
+Question 9
+
+Question:
+Create two dataframes using the two dicts below, and then merge them.
+
+Car_Price = {'Company': ['Toyota', 'Honda', 'BMV', 'Audi'], 'Price': [23845, 17995, 135925 , 71400]}
+car_Horsepower = {'Company': ['Toyota', 'Honda', 'BMV', 'Audi'], 'horsepower': [141, 80, 182 , 160]}
+
+Solution:
+import pandas as pd
+carPriceDf = pd.DataFrame.from_dict(Car_Price)
+carsHorsepowerDf = pd.DataFrame.from_dict(car_Horsepower)
+carsDf = pd.merge(carPriceDf, carsHorsepowerDf, on="Company")
+print(carsDf)
+#----------------------------------------#
